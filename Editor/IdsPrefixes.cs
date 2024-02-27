@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Qw1nt.Editor.SelfIds
 {
-    [CreateAssetMenu(fileName = "IdsPrefixes")]
+    [CreateAssetMenu]
     internal class IdsPrefixes : ScriptableObject
     {
         [SerializeField] private List<string> _prefixes;
