@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
-using Runtime.Shared.SelfIds;
+﻿using Qw1nt.SelfIds.Runtime;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-namespace Editor.SelfIds
+namespace Qw1nt.Editor.SelfIds
 {
     [CustomPropertyDrawer(typeof(Id))]
     public class SelfIdPropertyDrawer : PropertyDrawer

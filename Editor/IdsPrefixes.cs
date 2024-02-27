@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental;
 using UnityEngine;
 
-namespace Editor.SelfIds
+namespace Qw1nt.Editor.SelfIds
 {
     [CreateAssetMenu(fileName = "IdsPrefixes")]
     internal class IdsPrefixes : ScriptableObject

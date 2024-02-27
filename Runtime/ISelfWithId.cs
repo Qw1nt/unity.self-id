@@ -1,4 +1,4 @@
-﻿namespace Runtime.Shared.SelfIds
+﻿namespace Qw1nt.SelfIds.Runtime
 {
     public interface ISelfWithId
     {
