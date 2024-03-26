@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Qw1nt.SelfIds.Runtime
@@ -6,6 +7,9 @@ namespace Qw1nt.SelfIds.Runtime
     [Serializable]
     public struct Id
     {
+        private const uint GroupOffset = 10_000_000u;
+        private const uint SubGroupOffset = 10_000u;
+        
 #if UNITY_EDITOR
         [SerializeField] private bool _usePrefix;
         [SerializeField] private string _prefix;
@@ -31,6 +35,12 @@ namespace Qw1nt.SelfIds.Runtime
         }
         
         public static Id Null => new();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint Build(ushort group, ushort subGroup, ushort item)
+        {
+            return group * GroupOffset + subGroup * SubGroupOffset + (uint) Mathf.Clamp(item, 0, 9999);
+        }
 
         public static implicit operator string(Id id)
         {
