@@ -1,0 +1,25 @@
+Label {
+    -unity-font-definition: resource('Fonts/Inter-Bold');
+}
+
+.unity-button {
+    border-width: 1px;
+    padding: 2px 6px;
+    border-color: rgb(88, 88, 88);
+    background-color: rgb(88, 88, 88);
+    transition-duration: 120ms;
+}
+
+.unity-button:hover {
+    border-width: 1px;
+    border-color: rgb(110, 110, 110);
+    background-color: rgb(110, 110, 110);
+    transition-duration: 120ms;
+}
+
+.unity-button:active {
+    border-width: 1px;
+    border-color: rgb(99, 99, 99);
+    background-color: rgb(55, 55, 55);
+    transition-duration: 75ms;
+}

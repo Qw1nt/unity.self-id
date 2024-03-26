@@ -1,0 +1,18 @@
+:root {
+    justify-content: center;
+    flex-direction: column;
+}
+
+#root {
+    margin-top: 8px;
+    flex-grow: 1;
+    justify-content: center;
+    border-bottom-width: 2px;
+    border-bottom-color: #4B4B4B;
+    padding: 4px;
+}
+
+#group-name {
+    -unity-font-definition: resource("Fonts/Inter-Medium");
+    font-size: 14px;
+}
