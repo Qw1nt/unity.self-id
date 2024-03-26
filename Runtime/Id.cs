@@ -42,6 +42,12 @@ namespace Qw1nt.SelfIds.Runtime
             return group * GroupOffset + subGroup * SubGroupOffset + (uint) Mathf.Clamp(item, 0, 9999);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint GetGroupId(ushort group)
+        {
+            return group * GroupOffset;
+        }
+        
         public static implicit operator string(Id id)
         {
             return id._id;

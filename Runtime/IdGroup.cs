@@ -7,11 +7,11 @@ namespace Qw1nt.SelfIds.Runtime
     public class IdGroup
     {
         [SerializeField] private string _name;
-        [SerializeField] private uint _id;
+        [SerializeField] private ushort _id;
 
         [SerializeField] private IdSubgroup[] _subgroups;
         
-        public IdGroup(string name, uint id)
+        public IdGroup(string name, ushort id)
         {
             _name = name;
             _id = id;
@@ -19,6 +19,6 @@ namespace Qw1nt.SelfIds.Runtime
 
         public string Name => _name;
 
-        public uint Id => _id;
+        public ushort Id => _id;
     }
 }

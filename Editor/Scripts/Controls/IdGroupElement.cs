@@ -1,7 +1,5 @@
 ﻿using System;
-using JetBrains.Annotations;
 using Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes;
-using Qw1nt.SelfIds.Runtime;
 using UnityEngine;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
@@ -12,12 +10,17 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
     {
         public const string RootKey = "root";
         public const string NameKey = "group-name";
+        public const string DeleteGroupButtonKey = "delete-group-button";
 
+        private const string VisualTreePath = "IdGroupElementAsset";
         private const string UssStylePath = "Uss/" + nameof(IdGroupElement) + "Style";
-
+        
         private readonly Label _label;
-
+        private readonly Button _deleteGroupButton;
+        
         private SerializedIdGroup _source;
+        
+        private Action _deleteGroupSubscribe;
 
         [Preserve]
         public new class UxmlFactrory : UxmlFactory<IdGroupElement>
@@ -26,12 +29,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
 
         public IdGroupElement()
         {
-            styleSheets.Add(Resources.Load<StyleSheet>(UssStylePath));
-
             var root = new VisualElement() {name = RootKey};
-            _label = new Label {name = NameKey};
+            Resources.Load<VisualTreeAsset>(VisualTreePath).CloneTree(root);
 
-            root.Add(_label);
+            _label = root.Q<Label>(NameKey);
+            _deleteGroupButton = root.Q<Button>(DeleteGroupButtonKey);
 
             hierarchy.Add(root);
         }
@@ -45,10 +47,20 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
 
-                _label.text = value.Name.stringValue;
+                _label.text = value.Name;
                 _source = value;
             }
         }
-        
+
+        public void SubscribeOnDeleteGroup(Action action)
+        {
+            _deleteGroupSubscribe = action;
+            _deleteGroupButton.clicked += _deleteGroupSubscribe;
+        }
+
+        public void UnSubscribe()
+        {
+            _deleteGroupButton.clicked -= _deleteGroupSubscribe;
+        }
     }
 }

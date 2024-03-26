@@ -6,6 +6,7 @@ using Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UIElements.Button;
 
 namespace Qw1nt.SelfIds.Editor.Scripts
 {
@@ -14,8 +15,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts
         public const string DatabaseAssetLabel = "IdDatabase";
         private const string WindowTreeAssetPath = "IdDatabaseWindow";
 
-        private readonly List<SerializedProperty> _groups = new(32);
+        private bool _hasListChanges;
+
         private SerializedIdDatabase _database;
+        private TextField _groupNameInputField;
 
         private ListView _groupView;
         private VisualElement _contentDisplay;
@@ -24,6 +27,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts
         {
             LoadDatabase();
             BuildView();
+            InstallBindings();
         }
 
         private void LoadDatabase()
@@ -41,9 +45,6 @@ namespace Qw1nt.SelfIds.Editor.Scripts
             _database = new SerializedIdDatabase();
             _database.SetOwner(serializedObject)
                 .SetSource(serializedObject.FindProperty("_records"));
-
-            foreach (var record in _database.Records)
-                _groups.Add(record.Source);
         }
 
         private void BuildView()
@@ -51,10 +52,13 @@ namespace Qw1nt.SelfIds.Editor.Scripts
             var tree = Resources.Load<VisualTreeAsset>(WindowTreeAssetPath);
             tree.CloneTree(rootVisualElement);
 
+            _groupNameInputField = rootVisualElement.Q<TextField>("group-name-input");
+
             var panel = new TwoPaneSplitView(0, 250f, TwoPaneSplitViewOrientation.Horizontal);
+
             _groupView = new ListView
             {
-                fixedItemHeight = 48
+                fixedItemHeight = 45f
             };
 
             _contentDisplay = new VisualElement();
@@ -64,9 +68,35 @@ namespace Qw1nt.SelfIds.Editor.Scripts
             panel.Add(_groupView);
             panel.Add(_contentDisplay);
 
-            _groupView.itemsSource = _groups;
+            _database.Records.BindView(_groupView);
 
             rootVisualElement.Q<VisualElement>("content").Add(panel);
+        }
+
+        private void InstallBindings()
+        {
+            rootVisualElement.Q<Button>("create-group-button").clicked += () =>
+            {
+                if (string.IsNullOrEmpty(_groupNameInputField.value) == true)
+                {
+                    EditorUtility.DisplayDialog("Ошибка", "Название группы не может быть пустым", "Ок");
+                    return;
+                }
+
+                var lastId = (ushort) _database.Records.Count == 0
+                    ? 0u
+                    : _database.Records[^1].Id;
+
+                _database.Records.CreateElement(item =>
+                {
+                    item.Id = lastId + 1u;
+                    item.Name = _groupNameInputField.value;
+                    item.Subgroups.Clear();
+                });
+
+                _groupNameInputField.value = string.Empty;
+                _groupView.RefreshItems();
+            };
         }
 
         private void BuildGroupPart()
@@ -80,14 +110,34 @@ namespace Qw1nt.SelfIds.Editor.Scripts
             _groupView.bindItem = (element, i) => BindItem(element as IdGroupElement, i);
         }
 
-        private void BindItem(IdGroupElement element, int i)
+        private void BindItem(IdGroupElement element, int index)
         {
+            element.UnSubscribe();
             var group = new SerializedIdGroup();
 
             group.SetOwner(_database);
-            group.SetSource(_groups[i]);
+            group.SetSource(_database.Records[index].Source);
 
             element.Source = group;
+
+            element.SubscribeOnDeleteGroup(() =>
+            {
+                if(EditorUtility.DisplayDialog("Group removing", $"Delete group with name {group.Name}?", "Yes", "No") == false)
+                    return;
+                
+                var startId = _database.Records[index].Id;
+                
+                _database.Records.RemoveAt(index);
+                _groupView.RefreshItems();
+                
+                for (int i = index; i < _database.Records.Count; i++)
+                {
+                    _database.Records[i].Id = startId;
+                    startId++;
+                }
+
+                _database.Owner.ApplyModifiedProperties();
+            });
         }
 
         [MenuItem("Qw1nt/SelfId/Open Database")]

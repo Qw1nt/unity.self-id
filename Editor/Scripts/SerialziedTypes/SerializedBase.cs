@@ -8,7 +8,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
         public SerializedObject Owner { get; private set; }
      
         protected SerializedProperty Reference { get; private set; }
-        
+
         public SerializedBase SetOwner(SerializedObject owner)
         {
             Owner = owner;
