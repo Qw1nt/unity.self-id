@@ -56,11 +56,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts
 
             var panel = new TwoPaneSplitView(0, 250f, TwoPaneSplitViewOrientation.Horizontal);
 
-            _groupView = new ListView
+            _groupView = new ListView()
             {
-                fixedItemHeight = 45f
+                virtualizationMethod = CollectionVirtualizationMethod.FixedHeight,
+                fixedItemHeight = 48
             };
-
             _contentDisplay = new VisualElement();
 
             BuildGroupPart();
