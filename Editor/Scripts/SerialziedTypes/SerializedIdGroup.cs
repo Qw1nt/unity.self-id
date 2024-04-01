@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using Qw1nt.SelfIds.Editor.Scripts.Extensions;
 using Qw1nt.SelfIds.Editor.Scripts.Interfaces;
 using UnityEditor;
 
@@ -15,12 +16,18 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
         public string Name
         {
             get => _name.stringValue;
-            set => _name.stringValue = value;
+            set
+            {
+                if(value.IsValidName() == false)
+                    return;
+
+                _name.stringValue = value;
+            }
         }
 
-        public uint Id
+        public ushort Id
         {
-            get => _id.uintValue;
+            get => (ushort) _id.uintValue;
             set => _id.uintValue = value;
         }
         

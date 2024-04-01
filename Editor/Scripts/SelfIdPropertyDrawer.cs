@@ -41,11 +41,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts
 
             DrawContentPart(contentRect, content);
 
-            id.stringValue = drawPrefix == true 
+            /*id.stringValue = drawPrefix == true 
                 ? $"{prefix.stringValue}:{content.stringValue}" 
                 : content.stringValue;
 
-            hash.intValue = id.stringValue.GetHashCode() ^ id.stringValue.Length;
+            hash.intValue = id.stringValue.GetHashCode() ^ id.stringValue.Length;*/
             
             EditorGUI.EndProperty();
         }

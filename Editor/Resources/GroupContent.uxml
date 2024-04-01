@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row; margin-top: 8px;">
+        <ui:ListView name="subgroups-container" fixed-item-height="45" style="flex-grow: 1;" />
+        <ui:VisualElement style="flex-grow: 0; background-color: rgb(142, 142, 142); width: 2px;" />
+        <ui:ListView name="ids-container" style="flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

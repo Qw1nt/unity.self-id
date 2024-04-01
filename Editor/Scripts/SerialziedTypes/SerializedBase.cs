@@ -23,6 +23,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             return this;
         }
 
+        public void ApplyModifiers()
+        {
+            Owner.ApplyModifiedProperties();
+        }
+        
         protected abstract void OnSetSource(SerializedProperty source);
         
         public bool Equals(SerializedProperty other)

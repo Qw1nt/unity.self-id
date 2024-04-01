@@ -17,7 +17,8 @@ namespace Qw1nt.SelfIds.Runtime
 #endif
 
         [SerializeField] private string _id;
-        [SerializeField] private int _hash;
+        [SerializeField] private uint _indexInSubgroup;
+        [SerializeField] private uint _hash;
 
         public override string ToString()
         {
@@ -53,7 +54,7 @@ namespace Qw1nt.SelfIds.Runtime
             return id._id;
         }
         
-        public static implicit operator int(Id id)
+        public static implicit operator uint(Id id)
         {
             return id._hash;
         }
@@ -78,7 +79,7 @@ namespace Qw1nt.SelfIds.Runtime
 
         public override int GetHashCode()
         {
-            return _hash;
+            return (int) _hash;
         }
     }
 }

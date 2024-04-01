@@ -1,5 +1,6 @@
 ﻿using Qw1nt.SelfIds.Editor.Scripts.Interfaces;
 using UnityEditor;
+using UnityEngine;
 
 namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
 {

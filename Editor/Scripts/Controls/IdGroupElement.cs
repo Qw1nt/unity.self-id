@@ -10,7 +10,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
     {
         public const string RootKey = "root";
         public const string NameKey = "group-name";
-        public const string DeleteGroupButtonKey = "delete-group-button";
+        public const string DeleteGroupButtonKey = "delete-button";
 
         private const string VisualTreePath = "IdGroupElementAsset";
         private const string UssStylePath = "Uss/" + nameof(IdGroupElement) + "Style";

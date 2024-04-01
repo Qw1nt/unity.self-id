@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Qw1nt.SelfIds.Editor.Scripts.Common;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
@@ -10,16 +11,19 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
     internal sealed class SerializedArray<T>
         where T : SerializedBase, new()
     {
-        private readonly SerializedObject _owner;
+        private readonly SerializedObject _serializedObject;
         private readonly SerializedProperty _source;
         private readonly PooledList<T> _items;
 
-        public SerializedArray(SerializedObject owner, SerializedProperty source)
+        public event Action Changed;
+        
+        public SerializedArray(SerializedObject serializedObject, SerializedProperty source)
         {
             if (source.isArray == false)
                 throw new ArgumentException();
 
-            _owner = owner;
+            _serializedObject = serializedObject;
+            
             _source = source;
             _items = new PooledList<T>(_source.arraySize);
 
@@ -27,8 +31,12 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
 
             for (int i = 0; i < arraySize; i++)
             {
-                var item = new T().SetSource(_source.GetArrayElementAtIndex(i));
-                _items.Add((T) item);
+                var item = new T();
+                
+                item.SetOwner(_serializedObject)
+                    .SetSource(_source.GetArrayElementAtIndex(i));
+                
+                _items.Add(item);
             }
         }
 
@@ -52,18 +60,23 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
 
             var itemSource = _source.GetArrayElementAtIndex(_source.arraySize - 1);
 
-            item.SetOwner(_owner)
+            item.SetOwner(_serializedObject)
                 .SetSource(itemSource);
 
             onCreate?.Invoke(item);
             onComplete?.Invoke();
 
+            Changed?.Invoke();
+            
             return new ValueTuple<SerializedProperty, T>(itemSource, _items[^1]);
         }
 
         public void Add(T element)
         {
             _source.arraySize += 1;
+            _items.Add(element);
+            
+            Changed?.Invoke();
         }
 
         public bool Remove(T item)
@@ -98,21 +111,23 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             _items.Clear();
 
             _source.DeleteArrayElementAtIndex(index);
-            _owner.ApplyModifiedProperties();
+            _serializedObject.ApplyModifiedProperties();
 
             for (int i = 0; i < _source.arraySize; i++)
             {
-                _items.TakeFromPoolOrCreate().SetOwner(_owner)
+                _items.TakeFromPoolOrCreate().SetOwner(_serializedObject)
                     .SetSource(_source.GetArrayElementAtIndex(i));
             }
+            
+            Changed?.Invoke();
         }
 
         public void Clear()
         {
             _source.arraySize = 0;
             _items.Clear();
-
-            _owner.ApplyModifiedProperties();
+            
+            Changed?.Invoke();
         }
 
         public Enumerator GetEnumerator()

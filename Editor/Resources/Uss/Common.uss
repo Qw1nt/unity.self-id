@@ -2,6 +2,37 @@ Label {
     -unity-font-definition: resource('Fonts/Inter-Bold');
 }
 
+#delete-button {
+    background-color: #FD4C52;
+    padding: 4px 6px;
+    border-width: 0;
+    transition-duration: 120ms;
+    font-size: 13px;
+    -unity-font-style: bold;
+}
+
+#delete-button:hover {
+    background-color: #ff6368;
+}
+
+#delete-button:active {
+    background-color: #bb2025;
+}
+
+/*#add-new-element-button{
+    background-color: #6b79b0;
+    border-width: 0;
+    padding: 4 8;
+}
+
+#add-new-element-button:hover{
+    background-color: #8090ce;
+}
+
+#add-new-element-button:active{
+    background-color: #556296;
+}*/
+
 .unity-button {
     border-width: 1px;
     padding: 2px 6px;
@@ -27,26 +58,26 @@ Label {
 .unity-list-view__item {
     justify-content: center;
     align-items: stretch;
-
-    background-color: rgb(70, 70, 70);
-    border-radius: 16px;
-    
-    border-bottom-width: 1px;
-    border-bottom-color: white;
-
-    padding-left: 10px;
-    padding-right: 10px;
+    /*border-radius: 8 8 0 0;*/
+    /*    background-color: rgb(70, 70, 70);
+        border-radius: 16px;
+        border-bottom-width: 1px;
+        border-bottom-color: white;
+        padding-left: 10px;
+        padding-right: 10px;*/
 }
 
-
 .unity-list-view__item:hover {
-    border-color: white;
+    /*border-color: white;*/
     background-color: rgb(75, 75, 75);
     transition-duration: 150ms;
 }
 
 .unity-list-view__item:selected {
     height: 48px;
-    background-color: rgb(90, 90, 90);
+    background-color: #5f7a91;
+/*    background-color: rgb(90, 90, 90);
+    border-bottom-width: 6px;
+    border-bottom-color: rgb(40, 40, 40);*/
     transition-duration: 150ms;
 }
