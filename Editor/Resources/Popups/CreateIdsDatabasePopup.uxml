@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/3rdParty/Qw1nt/unity.self-id/Editor/Resources/Uss/Common.uss?fileID=7433441132597879392&amp;guid=3d3b03942654c164d971a0ae9a49b509&amp;type=3#Common" />
+    <ui:VisualElement style="flex-grow: 1; padding-top: 8px; padding-right: 5px; padding-left: 5px;">
+        <ui:VisualElement style="flex-grow: 0; flex-direction: row; margin-top: 8px;">
+            <ui:Label tabindex="-1" text="Сохранить в:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="justify-content: center; align-self: center; margin-right: 4px;" />
+            <ui:TextField picking-mode="Ignore" password="false" readonly="true" name="save-path" style="flex-grow: 1; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+            <ui:Button text="Обзор" parse-escape-sequences="true" display-tooltip-when-elided="true" name="set-save-path-button" />
+        </ui:VisualElement>
+        <ui:Button text="Создать" parse-escape-sequences="true" display-tooltip-when-elided="true" name="create-button" style="margin-top: 5px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+    </ui:VisualElement>
+</ui:UXML>

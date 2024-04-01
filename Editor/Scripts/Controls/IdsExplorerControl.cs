@@ -67,7 +67,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             {
                 var id = _subgroup.Ids[index];
                 
-                if (EditorUtility.DisplayDialog("Удаление ID", $"Удалить ID с названием {id.FullName}?", "Да",
+                if (EditorUtility.DisplayDialog("Удаление ID", $"Удалить ID с названием {id.Name}?", "Да",
                         "Нет") == false)
                     return;
                 
@@ -107,10 +107,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
 
             foreach (var id in ids)
             {
-                if (id.FullName != _addElementView.Name)
+                if (id.Name != _addElementView.Name)
                     continue;
 
-                EditorUtility.DisplayDialog("Ошибка", $"Подгруппа с названием {id.FullName} уже существует", "Ок");
+                EditorUtility.DisplayDialog("Ошибка", $"ID с названием {id.Name} уже существует", "Ок");
                 return;
             }
 
@@ -120,9 +120,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
 
             ids.CreateElement(id =>
             {
+                id.EditorFullName = $"{_subgroup.Name}/{_addElementView.Name}";
                 id.IndexInSubgroup = lastId + 1;
-                id.Hash = Id.Build((ushort) _subgroup.GroupId, (ushort) _subgroup.Id, (ushort) id.IndexInSubgroup);
-                id.FullName = _addElementView.Name;
+                id.Hash = Id.Build(_subgroup.GroupId, _subgroup.Id, (ushort) id.IndexInSubgroup);
+                id.Name = _addElementView.Name;
                 
                 id.ApplyModifiers();
             });

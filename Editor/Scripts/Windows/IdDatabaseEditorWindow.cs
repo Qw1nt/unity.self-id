@@ -30,7 +30,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
         private void CreateGUI()
         {
             if (TryLoadDatabase() == false)
+            {
+                Close();
                 return;
+            }
 
             BuildView();
             InstallBindings();
@@ -42,7 +45,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
             if (string.IsNullOrEmpty(guid) == true)
             {
-                Close();
+                var window = CreateInstance<CreateIdsDatabasePopup>();
+                window.position = new Rect(Screen.width / 2, Screen.height / 2, 350, 100);
+                window.titleContent = new GUIContent("Создание БД");
+
+                window.ShowModal();
                 return false;
             }
 
@@ -199,22 +206,16 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
         [MenuItem("Qw1nt/SelfId/Open Database")]
         private static void Open()
         {
-            var window = GetWindow<IdDatabaseEditorWindow>();
-            window.titleContent = new GUIContent("Id Database");
+            try
+            {
+                var window = GetWindow<IdDatabaseEditorWindow>();
+                window.titleContent = new GUIContent("Id Database");
 
-            window.minSize = new Vector2(150f, 350f);
-        }
-
-        [MenuItem("Qw1nt/SelfId/Create Database")]
-        public static void Create()
-        {
-            var path = "Assets/New Ids Database1.asset";
-            AssetDatabase.CreateAsset(CreateInstance<IdsDatabase>(), path);
-            AssetDatabase.Refresh();
-
-            var asset = AssetDatabase.LoadAssetAtPath<IdsDatabase>(path);
-            
-            AssetDatabase.SetLabels(asset, new []{DatabaseAssetLabel});
+                window.minSize = new Vector2(150f, 350f);
+            }
+            catch
+            {
+            }
         }
     }
 }

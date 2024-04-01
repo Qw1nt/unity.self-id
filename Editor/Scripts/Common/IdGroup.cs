@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using Qw1nt.SelfIds.Runtime;
 using UnityEngine;
 
-namespace Qw1nt.SelfIds.Runtime
+namespace Qw1nt.SelfIds.Editor.Scripts.Common
 {
     [Serializable]
     public class IdGroup
@@ -20,5 +22,7 @@ namespace Qw1nt.SelfIds.Runtime
         public string Name => _name;
 
         public ushort Id => _id;
+
+        internal IReadOnlyList<IdSubgroup> Subgroups => _subgroups;
     }
 }

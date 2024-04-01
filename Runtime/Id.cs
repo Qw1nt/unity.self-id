@@ -9,15 +9,18 @@ namespace Qw1nt.SelfIds.Runtime
     {
         private const uint GroupOffset = 10_000_000u;
         private const uint SubGroupOffset = 10_000u;
-        
-#if UNITY_EDITOR
-        [SerializeField] private bool _usePrefix;
-        [SerializeField] private string _prefix;
-        [SerializeField] private string _content;
-#endif
 
-        [SerializeField] private string _id;
+#if UNITY_EDITOR
+        [SerializeField] private string _fullName;
         [SerializeField] private uint _indexInSubgroup;
+
+        /// <summary>
+        /// ONLY EDITOR
+        /// </summary>
+        public string FullName => _fullName;
+#endif
+        
+        [SerializeField] private string _id;
         [SerializeField] private uint _hash;
 
         public override string ToString()
@@ -34,7 +37,7 @@ namespace Qw1nt.SelfIds.Runtime
         {
             return obj is Id other && Equals(other);
         }
-        
+
         public static Id Null => new();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -48,12 +51,12 @@ namespace Qw1nt.SelfIds.Runtime
         {
             return group * GroupOffset;
         }
-        
+
         public static implicit operator string(Id id)
         {
             return id._id;
         }
-        
+
         public static implicit operator uint(Id id)
         {
             return id._hash;

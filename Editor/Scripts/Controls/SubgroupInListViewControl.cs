@@ -13,9 +13,12 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
 
         private readonly TextField _nameField;
         private readonly Label _idsCountLabel;
+        private readonly Button _deleteButton;
 
         private SerializedSubgroup _subgroup;
 
+        private Action _deleteCallback;
+        
         [Preserve]
         public new class UxmlFactory : UxmlFactory<SubgroupInListViewControl>
         {
@@ -30,7 +33,9 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             _nameField.RegisterCallback<FocusOutEvent>(OnNameChanged);
 
             _idsCountLabel = root.Q<Label>("ids-count-label");
-
+            _deleteButton = root.Q<Button>("delete-button");
+            _deleteButton.clicked += () => _deleteCallback?.Invoke();
+            
             hierarchy.Add(root);
         }
 
@@ -61,6 +66,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             subgroup.Ids.Changed += OnIdsChanged;
         }
 
+        public void SubscribeOnDelete(Action action)
+        {
+            _deleteCallback = action;
+        }
+
         private void OnIdsChanged()
         {
             _idsCountLabel.text = _subgroup.Ids.Count.ToString();
@@ -69,6 +79,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
         public void Dispose()
         {
             _nameField.UnregisterCallback<FocusOutEvent>(OnNameChanged);
+            _deleteButton.clicked -= _deleteCallback;
 
             if (_subgroup != null)
                 _subgroup.Ids.Changed -= OnIdsChanged;

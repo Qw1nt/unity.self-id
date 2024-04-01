@@ -65,6 +65,30 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
         private void BindItem(SubgroupInListViewControl viewControl, int index)
         {
             viewControl.SetReference(_reference.Subgroups[index]);
+            viewControl.SubscribeOnDelete(() =>
+            {
+                var subgroup = _reference.Subgroups[index];
+                
+                if (EditorUtility.DisplayDialog("Удаление подгруппы", $"Удалить подгруппу с названием {_reference.Subgroups[index].Name}?", "Да",
+                        "Нет") == false)
+                    return;
+
+                var startId = subgroup.Id;
+
+                _reference.Subgroups.RemoveAt(index);
+
+                if (_itemsContainer.selectedIndex == index)
+                    _itemsContainer.selectedIndex = -1;
+
+                for (int i = index; i < _reference.Subgroups.Count; i++)
+                {
+                    _reference.Subgroups[i].Id = startId;
+                    startId++;
+                }
+
+                _reference.Owner.ApplyModifiedProperties();
+                _itemsContainer.RefreshItems();
+            });
         }
 
         private void OnAddNewElementButton()

@@ -5,19 +5,26 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
 {
     internal class SerializedId : SerializedBase
     {
-        private SerializedProperty _fullName;
+        private SerializedProperty _editorFullName;
+        private SerializedProperty _name;
         private SerializedProperty _indexInSubgroup;
         private SerializedProperty _hash;
 
-        public string FullName
+        public string EditorFullName
         {
-            get => _fullName.stringValue;
+            get => _editorFullName.stringValue;
+            set => _editorFullName.stringValue = value;
+        }
+        
+        public string Name
+        {
+            get => _name.stringValue;
             set
             {
                 if(value.IsValidName() == false)
                     return;
 
-                _fullName.stringValue = value;
+                _name.stringValue = value;
             }
         }
 
@@ -35,7 +42,8 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
         
         protected override void OnSetSource(SerializedProperty source)
         {
-            _fullName = source.FindPropertyRelative("_id");
+            _editorFullName = source.FindPropertyRelative("_fullName");
+            _name = source.FindPropertyRelative("_id");
             _indexInSubgroup = source.FindPropertyRelative("_indexInSubgroup");
             _hash = source.FindPropertyRelative("_hash");
         }

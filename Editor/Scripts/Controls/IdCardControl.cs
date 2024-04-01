@@ -43,11 +43,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
         {
             if (_name.value.IsValidName() == false)
             {
-                _name.value = _reference.FullName;
+                _name.value = _reference.Name;
                 return;
             }
 
-            _reference.FullName = _name.value;
+            _reference.Name = _name.value;
             _reference.ApplyModifiers();
         }
 
@@ -68,7 +68,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
                 _name.UnregisterCallback<FocusOutEvent>(OnNameChanged);
             
             _reference = serializedId;
-            _name.value = _reference.FullName;
+            _name.value = _reference.Name;
             _hashLabel.text = _reference.Hash.ToString();
         }
     }
