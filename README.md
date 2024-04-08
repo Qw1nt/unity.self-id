@@ -23,3 +23,6 @@
 
 #### Создание подгруппы
 ![App Screenshot](https://github.com/Qw1nt/unity.self-id/blob/master/Screenshots~/CreateSubgroup.png?raw=true)
+
+#### Создание ID
+![App Screenshot](https://github.com/Qw1nt/unity.self-id/blob/master/Screenshots~/CreateId.png?raw=true)
