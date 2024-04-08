@@ -13,5 +13,8 @@
 Всё взаимодействие с ID происходит через БД. Путь на панели инструментов:
 `Qw1nt/SelfId/Open Database`
 
+![App Screenshot](https://github.com/Qw1nt/unity.self-id/blob/master/Screenshots~/DatabaseWindowOpenPath.png?raw=true)
+![App Screenshot](https://github.com/Qw1nt/unity.self-id/blob/master/Screenshots~/IdDatabaseWindowDescription.png?raw=true)
+
 
 
