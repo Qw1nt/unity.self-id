@@ -23,6 +23,12 @@ namespace Qw1nt.SelfIds.Runtime
         [SerializeField] private string _id;
         [SerializeField] private uint _hash;
 
+        public uint Hash
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _hash;
+        }
+
         public override string ToString()
         {
             return _id;

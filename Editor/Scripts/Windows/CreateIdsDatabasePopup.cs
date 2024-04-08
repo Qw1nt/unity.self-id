@@ -40,15 +40,15 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
             AssetDatabase.SetLabels(asset, new[] {IdDatabaseEditorWindow.DatabaseAssetLabel});
             AssetDatabase.Refresh();
-            
+
             Close();
         }
 
         private void SetSavePath()
         {
-            var path = EditorUtility.SaveFilePanelInProject("Save animator data", "IdDatabase", "asset", "");
-
-            if (string.IsNullOrEmpty(path) == true)
+            var setter = new SavePathSetter();
+            
+            if (setter.TryExecute("Save Id Database", "IdDatabase", "asset", out var path) == false)
                 return;
 
             if (path.Contains("Editor") == false)

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Qw1nt.SelfIds.Editor.Scripts.Common;
 using Qw1nt.SelfIds.Editor.Scripts.Controls;
 using Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes;
-using Qw1nt.SelfIds.Runtime;
+using Qw1nt.SelfIds.Editor.Scripts.Utils;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -18,6 +19,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
         private bool _hasListChanges;
 
+        private Button _generateEnumButton;
         private SerializedIdDatabase _database;
         private TextField _groupNameInputField;
 
@@ -26,6 +28,9 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
         private SubgroupViewControl _subgroupContainer;
         private IdsExplorerControl _idsExplorerControl;
+
+        private SerializedIdGroup _selectedGroup;
+        private SerializedSubgroup _selectedSubgroup;
 
         private void CreateGUI()
         {
@@ -45,11 +50,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
             if (string.IsNullOrEmpty(guid) == true)
             {
-                var window = CreateInstance<CreateIdsDatabasePopup>();
-                window.position = new Rect(Screen.width / 2, Screen.height / 2, 350, 100);
-                window.titleContent = new GUIContent("Создание БД");
-
-                window.ShowModal();
+                ModalUtils.Open<CreateIdsDatabasePopup>("Создание БД");
                 return false;
             }
 
@@ -71,6 +72,8 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
             tree.CloneTree(rootVisualElement);
 
             _groupNameInputField = rootVisualElement.Q<TextField>("group-name-input");
+            _generateEnumButton = rootVisualElement.Q<Button>("open-generation-view");
+            _generateEnumButton.SetEnabled(false);
 
             var panel = new TwoPaneSplitView(0, 250f, TwoPaneSplitViewOrientation.Horizontal);
 
@@ -93,12 +96,12 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
             panel.Add(_contentDisplay);
 
             _database.Records.BindView(_groupView);
-            _groupView.selectionChanged += OnSelectionChanges;
+            _groupView.selectionChanged += OnGroupSelected;
 
             rootVisualElement.Q<VisualElement>("content").Add(panel);
         }
 
-        private void OnSelectionChanges(IEnumerable<object> obj)
+        private void OnGroupSelected(IEnumerable<object> obj)
         {
             if (obj == null || obj.Count() == 0)
             {
@@ -110,8 +113,9 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
             var selected = obj.First();
             var group = (SerializedIdGroup) selected;
+            _selectedGroup = group;
 
-            _subgroupContainer.SetReference(group);
+            _subgroupContainer.SetReference(_selectedGroup);
         }
 
         private void InstallBindings()
@@ -148,6 +152,17 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
                 _groupNameInputField.value = string.Empty;
                 _groupView.RefreshItems();
+            };
+
+            _generateEnumButton.clicked += () =>
+            {
+                var argument = new EnumSourceGeneratorPopupData
+                {
+                    Group = _selectedGroup,
+                    Subgroup = _selectedSubgroup
+                };
+                
+                ModalUtils.Open<EnumSourceGenerationPopup, EnumSourceGeneratorPopupData>("Генерация enum'а", argument);
             };
 
             _subgroupContainer.SelectedSubgroup += OnSelectedSubgroup;
@@ -200,7 +215,15 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
         private void OnSelectedSubgroup(SerializedSubgroup subgroup)
         {
+            _selectedSubgroup = subgroup;
+            _generateEnumButton.SetEnabled(subgroup != null);
             _idsExplorerControl.SetReference(subgroup);
+        }
+
+        private void OnDestroy()
+        {
+            _groupView.selectionChanged -= OnGroupSelected;
+            _subgroupContainer.SelectedSubgroup -= OnSelectedSubgroup;
         }
 
         [MenuItem("Qw1nt/SelfId/Open Database")]

@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/3rdParty/Qw1nt/unity.self-id/Editor/Resources/Uss/Common.uss?fileID=7433441132597879392&amp;guid=3d3b03942654c164d971a0ae9a49b509&amp;type=3#Common" />
+    <Style src="project://database/Assets/3rdParty/Qw1nt/unity.self-id/Editor/Resources/Uss/EnumSourceGenerationPopupStyle.uss?fileID=7433441132597879392&amp;guid=bd8ee4730a01ff74b8343317579fee6a&amp;type=3#EnumSourceGenerationPopupStyle" />
+    <ui:VisualElement name="root" style="flex-grow: 1; padding-top: 6px;">
+        <ui:VisualElement style="flex-grow: 0; flex-direction: row; flex-shrink: 1; -unity-text-align: upper-center; justify-content: center; align-items: stretch; align-self: auto;">
+            <ui:TextField picking-mode="Ignore" label="Путь сохранения:" name="save-path-field" focusable="false" readonly="true" style="flex-grow: 1;" />
+            <ui:Button text="Выбрать" parse-escape-sequences="true" display-tooltip-when-elided="true" name="select-save-path-button" />
+        </ui:VisualElement>
+        <ui:TextField picking-mode="Ignore" label="Namespace:" value="filler text" name="namespace-field" style="margin-top: 8px;" />
+        <ui:VisualElement style="flex-grow: 0; margin-top: 8px; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; background-color: rgb(50, 50, 50); flex-direction: row;">
+            <ui:Label tabindex="-1" text="Группа:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 15px; -unity-text-align: middle-left;" />
+            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="group-name" style="justify-content: center; margin-left: 8px; -unity-text-align: middle-left; font-size: 14px;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 0; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; font-size: 14px; flex-direction: row;">
+            <ui:Label tabindex="-1" text="Подгруппа:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 15px; -unity-text-align: middle-left;" />
+            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="subgroup-name" style="justify-content: center; margin-left: 8px; -unity-text-align: middle-left; font-size: 14px;" />
+        </ui:VisualElement>
+        <ui:Button text="Сгенерировать" parse-escape-sequences="true" display-tooltip-when-elided="true" name="generate-button" style="margin-top: 8px;" />
+    </ui:VisualElement>
+</ui:UXML>
