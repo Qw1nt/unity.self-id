@@ -36,8 +36,13 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
         {
             if (TryLoadDatabase() == false)
             {
-                Close();
-                return;
+                ModalUtils.Open<CreateIdsDatabasePopup>("Создание БД");
+
+                if (TryLoadDatabase() == false)
+                {
+                    Close();
+                    return;
+                }
             }
 
             BuildView();
@@ -49,10 +54,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
             var guid = AssetDatabase.FindAssets("l:" + DatabaseAssetLabel).FirstOrDefault();
 
             if (string.IsNullOrEmpty(guid) == true)
-            {
-                ModalUtils.Open<CreateIdsDatabasePopup>("Создание БД");
                 return false;
-            }
 
             var path = AssetDatabase.GUIDToAssetPath(guid);
             var database = AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);
