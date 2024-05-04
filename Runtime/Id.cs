@@ -64,9 +64,6 @@ namespace Qw1nt.SelfIds.Runtime
     [Serializable]
     public struct Id
     {
-        private const uint GroupOffset = 10_000_000u;
-        private const uint SubGroupOffset = 10_000u;
-
         [SerializeField] private ushort _groupId;
         [SerializeField] private ushort _subgroupId;
 
@@ -112,12 +109,6 @@ namespace Qw1nt.SelfIds.Runtime
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => new(_groupId, _subgroupId, _indexInSubgroup);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint Build(ushort group, ushort subGroup, ushort item)
-        {
-            return group * GroupOffset + subGroup * SubGroupOffset + (uint)Mathf.Clamp(item, 0, 9999);
         }
 
         public static implicit operator IdCalculator(Id id)
