@@ -112,7 +112,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
             }
 
             var selected = obj.First();
-            var group = (SerializedIdGroup) selected;
+            var group = (SerializedIdGroup)selected;
             _selectedGroup = group;
 
             _subgroupContainer.SetReference(_selectedGroup);
@@ -138,12 +138,12 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
                 }
 
                 var lastId = _database.Records.Count == 0
-                    ? (ushort) 0u
+                    ? (ushort)0u
                     : _database.Records[^1].Id;
 
                 _database.Records.CreateElement(item =>
                 {
-                    item.Id = (ushort) (lastId + 1);
+                    item.Id = (ushort)(lastId + 1);
                     item.Name = _groupNameInputField.value;
                     item.Subgroups.Clear();
 
@@ -161,7 +161,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
                     Group = _selectedGroup,
                     Subgroup = _selectedSubgroup
                 };
-                
+
                 ModalUtils.Open<EnumSourceGenerationPopup, EnumSourceGeneratorPopupData>("Генерация enum'а", argument);
             };
 
@@ -222,8 +222,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
         private void OnDestroy()
         {
-            _groupView.selectionChanged -= OnGroupSelected;
-            _subgroupContainer.SelectedSubgroup -= OnSelectedSubgroup;
+            if (_groupView != null)
+                _groupView.selectionChanged -= OnGroupSelected;
+
+            if (_subgroupContainer != null)
+                _subgroupContainer.SelectedSubgroup -= OnSelectedSubgroup;
         }
 
         [MenuItem("Qw1nt/SelfId/Open Database")]
