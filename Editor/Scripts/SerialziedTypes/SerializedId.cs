@@ -7,45 +7,55 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
     {
         private SerializedProperty _editorFullName;
         private SerializedProperty _name;
+     
+        private SerializedProperty _groupId;
+        private SerializedProperty _subgroupId;
         private SerializedProperty _indexInSubgroup;
-        private SerializedProperty _hash;
-
+        
         public string EditorFullName
         {
             get => _editorFullName.stringValue;
             set => _editorFullName.stringValue = value;
         }
-        
+
         public string Name
         {
             get => _name.stringValue;
             set
             {
-                if(value.IsValidName() == false)
+                if (value.IsValidName() == false)
                     return;
 
                 _name.stringValue = value;
             }
         }
 
-        public uint IndexInSubgroup
+        public ushort GroupId
         {
-            get => _indexInSubgroup.uintValue;
-            set => _indexInSubgroup.uintValue = value;
+            get => (ushort) _groupId.uintValue;
+            set => _groupId.uintValue = value;
         }
-        
-        public uint Hash
+
+        public ushort SubgroupId
         {
-            get => _hash.uintValue;
-            set => _hash.uintValue = value;
+            get => (ushort) _subgroupId.uintValue;
+            set => _subgroupId.uintValue = value;
         }
-        
+
+        public int IndexInSubgroup
+        {
+            get => _indexInSubgroup.intValue;
+            set => _indexInSubgroup.intValue = value;
+        }
+
         protected override void OnSetSource(SerializedProperty source)
         {
             _editorFullName = source.FindPropertyRelative("_fullName");
             _name = source.FindPropertyRelative("_id");
+
+            _groupId = source.FindPropertyRelative("_groupId");
+            _subgroupId = source.FindPropertyRelative("_subgroupId");
             _indexInSubgroup = source.FindPropertyRelative("_indexInSubgroup");
-            _hash = source.FindPropertyRelative("_hash");
         }
     }
 }

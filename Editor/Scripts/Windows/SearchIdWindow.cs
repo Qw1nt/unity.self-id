@@ -36,7 +36,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
                     foreach (var id in subgroup.Ids)
                     {
-                        result.Add(new SearchTreeEntry(new GUIContent(id.ToString()))
+                        result.Add(new SearchTreeEntry(new GUIContent(id.EditorStingId))
                         {
                             level = 3,
                             userData = id

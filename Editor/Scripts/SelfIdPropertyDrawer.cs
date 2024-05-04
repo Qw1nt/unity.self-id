@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Qw1nt.SelfIds.Editor.Scripts
 {
     [CustomPropertyDrawer(typeof(Id))]
-    public class SelfIdPropertyDrawer : PropertyDrawer
+    internal class SelfIdPropertyDrawer : PropertyDrawer
     {
         private const float EmpiricCalculatedHeight = 9f;
         private string[] _idsPrefixes;
@@ -21,6 +21,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts
         {
             var fullName = property.FindPropertyRelative("_fullName");
             var id = property.FindPropertyRelative("_id");
+            
+            var groupId = property.FindPropertyRelative("_groupId");
+            var subgroupId = property.FindPropertyRelative("_subgroupId");
+            var indexInSubgroup = property.FindPropertyRelative("_indexInSubgroup");
+            
             var hash = property.FindPropertyRelative("_hash");
 
             EditorGUI.BeginProperty(position, label, property);
@@ -34,10 +39,14 @@ namespace Qw1nt.SelfIds.Editor.Scripts
                 
                 window.SetSelectCallback(selectedId =>
                 {
-                    id.stringValue = selectedId.ToString();
-                    fullName.stringValue = selectedId.FullName;
-                    hash.uintValue = selectedId;
+                    id.stringValue = selectedId.EditorStingId;
+                    fullName.stringValue = selectedId.EditorFullName;
 
+                    var calculator = selectedId.Calculator;
+                    groupId.uintValue = calculator.Group;
+                    subgroupId.uintValue = calculator.Subgroup;
+                    indexInSubgroup.intValue = calculator.Index;
+                    
                     property.serializedObject.ApplyModifiedProperties();
                 });
 
