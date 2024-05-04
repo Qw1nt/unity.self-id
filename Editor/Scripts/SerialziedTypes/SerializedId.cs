@@ -34,10 +34,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             set => _indexInSubgroup.uintValue = value;
         }
         
-        public uint Hash
+        public int Hash
         {
-            get => _hash.uintValue;
-            set => _hash.uintValue = value;
+            get => _hash.intValue;
+            set => _hash.intValue = value;
         }
         
         protected override void OnSetSource(SerializedProperty source)

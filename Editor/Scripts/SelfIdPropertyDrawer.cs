@@ -36,7 +36,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts
                 {
                     id.stringValue = selectedId.ToString();
                     fullName.stringValue = selectedId.FullName;
-                    hash.uintValue = selectedId;
+                    hash.intValue = selectedId;
 
                     property.serializedObject.ApplyModifiedProperties();
                 });

@@ -7,10 +7,12 @@ namespace Qw1nt.SelfIds.Runtime
     [Serializable]
     public struct Id
     {
-        private const uint GroupOffset = 10_000_000u;
-        private const uint SubGroupOffset = 10_000u;
+        private const int GroupOffset = 10_000_000;
+        private const int SubGroupOffset = 10_000;
 
+        
 #if UNITY_EDITOR
+        [SerializeField] private string _id;
         [SerializeField] private string _fullName;
         [SerializeField] private uint _indexInSubgroup;
 
@@ -20,14 +22,7 @@ namespace Qw1nt.SelfIds.Runtime
         public string FullName => _fullName;
 #endif
         
-        [SerializeField] private string _id;
-        [SerializeField] private uint _hash;
-
-        public uint Hash
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _hash;
-        }
+        [SerializeField] private int _hash;
 
         public override string ToString()
         {
@@ -47,23 +42,18 @@ namespace Qw1nt.SelfIds.Runtime
         public static Id Null => new();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint Build(ushort group, ushort subGroup, ushort item)
+        public static int Build(ushort group, ushort subGroup, ushort item)
         {
-            return group * GroupOffset + subGroup * SubGroupOffset + (uint) Mathf.Clamp(item, 0, 9999);
+            return group * GroupOffset + subGroup * SubGroupOffset + Mathf.Clamp(item, 0, 9999);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static uint GetGroupId(ushort group)
+        public static int GetGroupId(ushort group)
         {
             return group * GroupOffset;
         }
 
-        public static implicit operator string(Id id)
-        {
-            return id._id;
-        }
-
-        public static implicit operator uint(Id id)
+        public static implicit operator int(Id id)
         {
             return id._hash;
         }
@@ -88,7 +78,7 @@ namespace Qw1nt.SelfIds.Runtime
 
         public override int GetHashCode()
         {
-            return (int) _hash;
+            return _hash;
         }
     }
 }
