@@ -123,8 +123,6 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
                 id.EditorFullName = $"{_subgroup.Name}/{_addElementView.Name}";
                 id.Name = _addElementView.Name;
 
-                id.GroupId = _subgroup.GroupId;
-                id.SubgroupId = _subgroup.Id;
                 id.IndexInSubgroup = lastId + 1;
                 
                 id.ApplyModifiers();

@@ -1,7 +1,6 @@
 ﻿using System;
 using Qw1nt.SelfIds.Editor.Scripts.Extensions;
 using Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes;
-using Qw1nt.SelfIds.Runtime;
 using UnityEngine;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
@@ -13,17 +12,18 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
         private const string TreeAssetPath = "IdCard";
 
         private readonly VisualElement _root;
-
+        
         private readonly TextField _name;
         private readonly Label _hashLabel;
         private readonly Button _deleteButton;
 
         private SerializedId _reference;
         private Action _deleteCallback;
-
+        
         [Preserve]
         public new class UxmlFactory : UxmlFactory<IdCardControl>
         {
+            
         }
 
         public IdCardControl()
@@ -35,7 +35,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             _deleteButton = _root.Q<Button>("delete-button");
 
             _name.RegisterCallback<FocusOutEvent>(OnNameChanged);
-
+            
             hierarchy.Add(_root);
         }
 
@@ -56,20 +56,20 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             _deleteCallback = action;
             _deleteButton.clicked += _deleteCallback;
         }
-
+        
         public void UnSubscribe()
         {
             _deleteButton.clicked -= _deleteCallback;
         }
-
+        
         public void SetReference(SerializedId serializedId)
         {
             if (_reference != null)
                 _name.UnregisterCallback<FocusOutEvent>(OnNameChanged);
-
+            
             _reference = serializedId;
             _name.value = _reference.Name;
-            _hashLabel.text = new IdCalculator(_reference.GroupId,  _reference.SubgroupId, _reference.IndexInSubgroup).ToString();
+            _hashLabel.text = _reference.Hash.ToString();
         }
     }
 }

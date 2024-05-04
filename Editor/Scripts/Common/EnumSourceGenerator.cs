@@ -2,7 +2,6 @@
 using System.Text;
 using Qw1nt.SelfIds.Editor.Scripts.Interfaces;
 using Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes;
-using Qw1nt.SelfIds.Runtime;
 using UnityEditor;
 using UnityEngine;
 
@@ -48,7 +47,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Common
             var ids = _subgroup.Ids;
             
             foreach (var id in ids)
-                builder.Append($"\t\t\t{id.Name} = {(int)new IdCalculator(id.GroupId, id.SubgroupId, id.IndexInSubgroup)},\n");
+                builder.Append($"\t\t\t{id.Name} = {id.Hash},\n");
 
             builder.Append("\t\t}\n");
             builder.Append("\t}\n");

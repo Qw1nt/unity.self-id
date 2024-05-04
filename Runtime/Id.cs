@@ -10,7 +10,6 @@ namespace Qw1nt.SelfIds.Runtime
         private const int GroupOffset = 10_000_000;
         private const int SubGroupOffset = 10_000;
 
-        
 #if UNITY_EDITOR
         [SerializeField] private string _id;
         [SerializeField] private string _fullName;
@@ -21,13 +20,15 @@ namespace Qw1nt.SelfIds.Runtime
         /// </summary>
         public string FullName => _fullName;
 #endif
-        
+
         [SerializeField] private int _hash;
 
+#if UNITY_EDITOR
         public override string ToString()
         {
             return _id;
         }
+#endif
 
         public bool Equals(Id other)
         {
