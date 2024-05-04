@@ -79,7 +79,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
                 for (int i = index; i < _subgroup.Ids.Count; i++)
                 {
                     _subgroup.Ids[i].IndexInSubgroup = startIndex;
-                    _subgroup.Ids[i].Hash = Id.Build(_subgroup.GroupId, _subgroup.Id, startIndex);
+                    // _subgroup.Ids[i].Hash = Id.Build(_subgroup.GroupId, _subgroup.Id, startIndex);
                     startIndex++;
                 }
 
@@ -116,14 +116,16 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
 
             var lastId = ids.Count > 0
                 ? ids[^1].IndexInSubgroup
-                : 0u;
+                : 0;
 
             ids.CreateElement(id =>
             {
                 id.EditorFullName = $"{_subgroup.Name}/{_addElementView.Name}";
-                id.IndexInSubgroup = lastId + 1;
-                id.Hash = Id.Build(_subgroup.GroupId, _subgroup.Id, (ushort) id.IndexInSubgroup);
                 id.Name = _addElementView.Name;
+
+                id.GroupId = _subgroup.GroupId;
+                id.SubgroupId = _subgroup.Id;
+                id.IndexInSubgroup = lastId + 1;
                 
                 id.ApplyModifiers();
             });
