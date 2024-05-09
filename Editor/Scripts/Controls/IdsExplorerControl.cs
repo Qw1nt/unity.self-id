@@ -1,4 +1,5 @@
-﻿using Qw1nt.SelfIds.Editor.Scripts.Extensions;
+﻿using Qw1nt.SelfIds.Editor.Scripts.Common;
+using Qw1nt.SelfIds.Editor.Scripts.Extensions;
 using Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes;
 using Qw1nt.SelfIds.Runtime;
 using UnityEditor;
@@ -17,6 +18,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
         private readonly AddArrayElementControl _addElementView;
         private readonly ListView _itemsContainer;
 
+        private SerializedIdGroup _group;
         private SerializedSubgroup _subgroup;
 
         [Preserve]
@@ -79,7 +81,6 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
                 for (int i = index; i < _subgroup.Ids.Count; i++)
                 {
                     _subgroup.Ids[i].IndexInSubgroup = startIndex;
-                    // _subgroup.Ids[i].Hash = Id.Build(_subgroup.GroupId, _subgroup.Id, startIndex);
                     startIndex++;
                 }
 
@@ -120,8 +121,9 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
 
             ids.CreateElement(id =>
             {
-                id.EditorFullName = $"{_subgroup.Name}/{_addElementView.Name}";
+                id.EditorFullName = $"{_group.Name}/{_subgroup.Name}/{_addElementView.Name}";
                 id.Name = _addElementView.Name;
+                id.Hash = Id.Build(_group.Id, _subgroup.Id, (ushort)id.IndexInSubgroup);
 
                 id.IndexInSubgroup = lastId + 1;
                 
@@ -139,8 +141,9 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             _addElementView.Disable();
         }
 
-        public void SetReference(SerializedSubgroup subgroup)
+        public void SetReference(SerializedIdGroup group, SerializedSubgroup subgroup)
         {
+            _group = group;
             _subgroup = subgroup;
             
             if (_subgroup == null)

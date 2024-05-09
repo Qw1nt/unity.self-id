@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Qw1nt.SelfIds.Runtime
 {
@@ -12,13 +13,13 @@ namespace Qw1nt.SelfIds.Runtime
 
 #if UNITY_EDITOR
         [SerializeField] private string _id;
-        [SerializeField] private string _fullName;
+        [SerializeField] private string _editorFullName;
         [SerializeField] private uint _indexInSubgroup;
 
         /// <summary>
         /// ONLY EDITOR
         /// </summary>
-        public string FullName => _fullName;
+        public string EditorFullName => _editorFullName;
 #endif
 
         [SerializeField] private int _hash;

@@ -19,7 +19,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var fullName = property.FindPropertyRelative("_fullName");
+            var fullName = property.FindPropertyRelative("_editorFullName");
             var id = property.FindPropertyRelative("_id");
             var hash = property.FindPropertyRelative("_hash");
 
@@ -35,7 +35,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts
                 window.SetSelectCallback(selectedId =>
                 {
                     id.stringValue = selectedId.ToString();
-                    fullName.stringValue = selectedId.FullName;
+                    fullName.stringValue = selectedId.EditorFullName;
                     hash.intValue = selectedId;
 
                     property.serializedObject.ApplyModifiedProperties();

@@ -41,7 +41,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Common
             builder.Append($"\tpublic partial struct {_group.Name}\n");
             builder.Append("\t{\n");
             
-            builder.Append($"\t\tpublic enum {_subgroup.Name} : uint \n");
+            builder.Append($"\t\tpublic enum {_subgroup.Name} : int \n");
             builder.Append("\t\t {\n");
 
             var ids = _subgroup.Ids;

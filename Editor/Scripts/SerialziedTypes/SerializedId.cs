@@ -42,7 +42,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
         
         protected override void OnSetSource(SerializedProperty source)
         {
-            _editorFullName = source.FindPropertyRelative("_fullName");
+            _editorFullName = source.FindPropertyRelative("_editorFullName");
             _name = source.FindPropertyRelative("_id");
             _indexInSubgroup = source.FindPropertyRelative("_indexInSubgroup");
             _hash = source.FindPropertyRelative("_hash");

@@ -108,7 +108,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
             if (obj == null || obj.Count() == 0)
             {
                 _subgroupContainer.SetReference(null);
-                _idsExplorerControl.SetReference(null);
+                _idsExplorerControl.SetReference(null, null);
 
                 return;
             }
@@ -219,7 +219,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
         {
             _selectedSubgroup = subgroup;
             _generateEnumButton.SetEnabled(subgroup != null);
-            _idsExplorerControl.SetReference(subgroup);
+            _idsExplorerControl.SetReference(_selectedGroup, subgroup);
         }
 
         private void OnDestroy()
