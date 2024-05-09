@@ -28,6 +28,11 @@ namespace Qw1nt.SelfIds.Runtime
         {
             return _id;
         }
+#else 
+        public override string ToString()
+        {
+            return _hash.ToString();
+        }
 #endif
 
         public bool Equals(Id other)
@@ -57,14 +62,6 @@ namespace Qw1nt.SelfIds.Runtime
         public static implicit operator int(Id id)
         {
             return id._hash;
-        }
-
-        public static implicit operator Id(string id)
-        {
-            return new Id
-            {
-                _id = id
-            };
         }
 
         public static bool operator ==(Id left, Id right)

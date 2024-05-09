@@ -34,6 +34,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
             }
 
             AssetDatabase.CreateAsset(CreateInstance<IdsDatabase>(), _savePath.value);
+            AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
             var asset = AssetDatabase.LoadAssetAtPath<IdsDatabase>(_savePath.value);
