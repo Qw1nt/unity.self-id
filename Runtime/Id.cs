@@ -67,7 +67,7 @@ namespace Qw1nt.SelfIds.Runtime
 
         public static bool operator ==(Id left, Id right)
         {
-            return left._id == right._id;
+            return left._hash == right._hash;
         }
 
         public static bool operator !=(Id left, Id right)
