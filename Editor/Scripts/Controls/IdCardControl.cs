@@ -18,6 +18,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
         private readonly Button _deleteButton;
 
         private SerializedId _reference;
+
+        private SerializedIdGroup _group;
+        private SerializedSubgroup _subgroup;
+        
         private Action _deleteCallback;
         
         [Preserve]
@@ -48,6 +52,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             }
 
             _reference.Name = _name.value;
+            _reference.EditorFullName = SerializedId.GenerateEditorFullName(_group, _subgroup, _reference);
             _reference.ApplyModifiers();
         }
 
@@ -62,10 +67,13 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             _deleteButton.clicked -= _deleteCallback;
         }
         
-        public void SetReference(SerializedId serializedId)
+        public void SetReference(SerializedIdGroup group, SerializedSubgroup subgroup, SerializedId serializedId)
         {
             if (_reference != null)
                 _name.UnregisterCallback<FocusOutEvent>(OnNameChanged);
+
+            _group = group;
+            _subgroup = subgroup;
             
             _reference = serializedId;
             _name.value = _reference.Name;

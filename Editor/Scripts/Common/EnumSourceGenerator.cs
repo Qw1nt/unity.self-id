@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using Qw1nt.SelfIds.Editor.Scripts.Interfaces;
 using Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes;
 using UnityEditor;
@@ -7,19 +8,10 @@ using UnityEngine;
 
 namespace Qw1nt.SelfIds.Editor.Scripts.Common
 {
-    // Group Name
-    public struct Items
-    {
-        // Subgroup Name
-        public enum Swords : uint
-        {
-            // | Items
-            WoodSword = 1
-        }
-    }
-    
     internal struct EnumSourceGenerator : ISourceGenerator
     {
+        private static readonly Regex NameCheckRegex = new(@"\s*(\([^()]*\))");
+        
         private readonly SerializedIdGroup _group;
         private readonly SerializedSubgroup _subgroup;
         private readonly string _namespace;
@@ -41,13 +33,13 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Common
             builder.Append($"\tpublic partial struct {_group.Name}\n");
             builder.Append("\t{\n");
             
-            builder.Append($"\t\tpublic enum {_subgroup.Name} : int \n");
+            builder.Append($"\t\tpublic enum {_subgroup.Name.Replace(" ", "")} : ulong \n");
             builder.Append("\t\t {\n");
 
             var ids = _subgroup.Ids;
             
             foreach (var id in ids)
-                builder.Append($"\t\t\t{id.Name} = {id.Hash},\n");
+                builder.Append($"\t\t\t{NameCheckRegex.Replace(id.Name, "").Replace(" ", "")} = {id.Hash}UL,\n");
 
             builder.Append("\t\t}\n");
             builder.Append("\t}\n");

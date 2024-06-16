@@ -14,37 +14,48 @@ namespace Qw1nt.SelfIds.Editor.Scripts
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return EmpiricCalculatedHeight;
+            return EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_id"));
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             var fullName = property.FindPropertyRelative("_editorFullName");
             var id = property.FindPropertyRelative("_id");
+
+            var group = property.FindPropertyRelative("_group");
+            var subgroup = property.FindPropertyRelative("_subgroup");
+            var item = property.FindPropertyRelative("_item");
+
             var hash = property.FindPropertyRelative("_hash");
 
             EditorGUI.BeginProperty(position, label, property);
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("ID: ");
+            EditorGUI.PrefixLabel(position, new GUIContent("ID: "));
+
+            position.x += 35f;
+            position.xMax -= 32f;
             
-            if (GUILayout.Button(fullName.stringValue, EditorStyles.popup) == true)
+            if (GUI.Button(position, fullName.stringValue, EditorStyles.popup) == true)
             {
                 var window = ScriptableObject.CreateInstance<SearchIdWindow>();
-                
+
                 window.SetSelectCallback(selectedId =>
                 {
                     id.stringValue = selectedId.ToString();
                     fullName.stringValue = selectedId.EditorFullName;
-                    hash.intValue = selectedId;
+
+                    group.ulongValue = selectedId.Group;
+                    subgroup.ulongValue = selectedId.Subgroup;
+                    item.ulongValue = selectedId.Subgroup;
+
+                    hash.ulongValue = selectedId;
 
                     property.serializedObject.ApplyModifiedProperties();
                 });
 
-                SearchWindow.Open(new SearchWindowContext(GUIUtility.GUIToScreenPoint(Event.current.mousePosition)), window);
+                SearchWindow.Open(new SearchWindowContext(GUIUtility.GUIToScreenPoint(Event.current.mousePosition)),
+                    window);
             }
-            
-            GUILayout.EndHorizontal();
 
             EditorGUI.EndProperty();
         }

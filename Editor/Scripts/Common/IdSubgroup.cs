@@ -8,9 +8,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Common
     [Serializable]
     public class IdSubgroup
     {
-        [SerializeField] private uint _groupId;
+        [SerializeField] private ulong _groupId;
         [SerializeField] private string _name;
-        [SerializeField] private uint _id;
+        [SerializeField] private ulong _id;
+        
         [SerializeField] private Id[] _ids;
 
         internal string Name => _name;

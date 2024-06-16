@@ -8,10 +8,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
         private SerializedProperty _name;
         private SerializedProperty _id;
 
-        public ushort GroupId
+        public ulong GroupId
         {
-            get => (ushort) _groupId.uintValue;
-            set => _groupId.uintValue = value;
+            get => _groupId.ulongValue;
+            set => _groupId.ulongValue = value;
         }
 
         public string Name
@@ -20,10 +20,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             set => _name.stringValue = value;
         }
 
-        public ushort Id
+        public ulong Id
         {
-            get => (ushort) _id.uintValue;
-            set => _id.uintValue = value;
+            get =>  _id.ulongValue;
+            set => _id.ulongValue = value;
         }
         
         public SerializedArray<SerializedId> Ids { get; private set; }

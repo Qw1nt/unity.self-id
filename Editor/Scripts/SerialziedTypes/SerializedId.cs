@@ -8,6 +8,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
         private SerializedProperty _editorFullName;
         private SerializedProperty _name;
         private SerializedProperty _indexInSubgroup;
+
+        private SerializedProperty _group;
+        private SerializedProperty _subgroup;
+        private SerializedProperty _item;
+        
         private SerializedProperty _hash;
 
         public string EditorFullName
@@ -33,11 +38,29 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             get => _indexInSubgroup.uintValue;
             set => _indexInSubgroup.uintValue = value;
         }
-        
-        public int Hash
+
+        public ulong Group
         {
-            get => _hash.intValue;
-            set => _hash.intValue = value;
+            get => _group.ulongValue;
+            set => _group.ulongValue = value;
+        }
+
+        public ulong Subgroup
+        {
+            get => _subgroup.ulongValue;
+            set => _subgroup.ulongValue = value;
+        }
+
+        public ulong Item
+        {
+            get => _item.ulongValue;
+            set => _item.ulongValue = value;
+        }
+        
+        public ulong Hash
+        {
+            get => _hash.ulongValue;
+            set => _hash.ulongValue = value;
         }
         
         protected override void OnSetSource(SerializedProperty source)
@@ -45,7 +68,17 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             _editorFullName = source.FindPropertyRelative("_editorFullName");
             _name = source.FindPropertyRelative("_id");
             _indexInSubgroup = source.FindPropertyRelative("_indexInSubgroup");
+
+            _group = source.FindPropertyRelative("_group");
+            _subgroup = source.FindPropertyRelative("_subgroup");
+            _item = source.FindPropertyRelative("_item");
+            
             _hash = source.FindPropertyRelative("_hash");
         }
+
+        public static string GenerateEditorFullName(SerializedIdGroup group, SerializedSubgroup subgroup, SerializedId id)
+        {
+            return $"{group.Name}/{subgroup.Name}/{id.Name}";
+        }    
     }
 }

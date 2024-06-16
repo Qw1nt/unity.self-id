@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Qw1nt.SelfIds.Editor.Scripts.Extensions;
 using Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes;
+using Qw1nt.SelfIds.Runtime;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -119,13 +120,14 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
 
             var lastId = subgroups.Count > 0
                 ? subgroups[^1].Id
-                : (ushort) 0;
+                : 0;
 
             subgroups.CreateElement(subgroup =>
             {
                 subgroup.GroupId = _reference.Id;
                 subgroup.Name = _addElementView.Name;
-                subgroup.Id = (ushort) (lastId + 1);
+                subgroup.Id = Id.GenerateFromGuid();
+                
                 subgroup.Ids.Clear();
                 
                 subgroup.ApplyModifiers();

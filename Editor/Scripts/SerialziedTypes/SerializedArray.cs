@@ -13,7 +13,8 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
     {
         private readonly SerializedObject _serializedObject;
         private readonly SerializedProperty _source;
-        private readonly PooledList<T> _items;
+        private readonly EditorList<T> _items;
+        private ListView _view;
 
         public event Action Changed;
         
@@ -25,7 +26,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             _serializedObject = serializedObject;
             
             _source = source;
-            _items = new PooledList<T>(_source.arraySize);
+            _items = new EditorList<T>(_source.arraySize);
 
             var arraySize = _source.arraySize;
 
@@ -34,7 +35,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
                 var item = new T();
                 
                 item.SetOwner(_serializedObject)
-                    .SetSource(_source.GetArrayElementAtIndex(i));
+                    .SetSelf(_source.GetArrayElementAtIndex(i));
                 
                 _items.Add(item);
             }
@@ -48,27 +49,28 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
 
         public void BindView(ListView view)
         {
+            _view = view;
             view.itemsSource = (List<T>) _items;
+            // _view.itemsSource = new List<T>();
         }
 
         public ValueTuple<SerializedProperty, T> CreateElement(Action<T> onCreate = null, Action onComplete = null)
         {
             _source.arraySize += 1;
+            
             var item = new T();
-
-            _items.Add(item);
-
             var itemSource = _source.GetArrayElementAtIndex(_source.arraySize - 1);
 
             item.SetOwner(_serializedObject)
-                .SetSource(itemSource);
+                .SetSelf(itemSource);
+
+            _items.Add(item);
 
             onCreate?.Invoke(item);
             onComplete?.Invoke();
 
             Changed?.Invoke();
-            
-            return new ValueTuple<SerializedProperty, T>(itemSource, _items[^1]);
+            return new ValueTuple<SerializedProperty, T>(itemSource, item);
         }
 
         public void Add(T element)
@@ -97,6 +99,8 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
                 return false;
 
             RemoveAt(indexToRemove);
+            _view.RefreshItems();
+            
             return true;
         }
 
@@ -108,6 +112,8 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             if (index < 0)
                 throw new ArgumentException();
 
+            _view.itemsSource = null;
+            
             _items.Clear();
 
             _source.DeleteArrayElementAtIndex(index);
@@ -115,9 +121,13 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
 
             for (int i = 0; i < _source.arraySize; i++)
             {
-                _items.TakeFromPoolOrCreate().SetOwner(_serializedObject)
-                    .SetSource(_source.GetArrayElementAtIndex(i));
+                var item = new T();
+                item.SetOwner(_serializedObject).SetSelf(_source.GetArrayElementAtIndex(i));
+                _items.Add(item);
             }
+
+            _view.itemsSource = (List<T>) _items;
+            _view.RefreshItems();
             
             Changed?.Invoke();
         }

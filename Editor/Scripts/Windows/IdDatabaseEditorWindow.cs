@@ -5,6 +5,7 @@ using Qw1nt.SelfIds.Editor.Scripts.Common;
 using Qw1nt.SelfIds.Editor.Scripts.Controls;
 using Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes;
 using Qw1nt.SelfIds.Editor.Scripts.Utils;
+using Qw1nt.SelfIds.Runtime;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -63,7 +64,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
 
             _database = new SerializedIdDatabase();
             _database.SetOwner(serializedObject)
-                .SetSource(serializedObject.FindProperty("_records"));
+                .SetSelf(serializedObject.FindProperty("_records"));
 
             return true;
         }
@@ -139,13 +140,9 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
                     return;
                 }
 
-                var lastId = _database.Records.Count == 0
-                    ? (ushort)0u
-                    : _database.Records[^1].Id;
-
                 _database.Records.CreateElement(item =>
                 {
-                    item.Id = (ushort)(lastId + 1);
+                    item.Id = Id.GenerateFromGuid();
                     item.Name = _groupNameInputField.value;
                     item.Subgroups.Clear();
 
@@ -187,7 +184,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
             var group = new SerializedIdGroup();
 
             group.SetOwner(_database);
-            group.SetSource(_database.Records[index].Source);
+            group.SetSelf(_database.Records[index].Source);
 
             element.Source = group;
 
@@ -196,20 +193,15 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
                 if (EditorUtility.DisplayDialog("Удаление группы", $"Удалить группу с названием {group.Name}?", "Да",
                         "Нет") == false)
                     return;
-
-                var startId = _database.Records[index].Id;
+                
+                if (_groupView.selectedIndex == index)
+                {
+                    _subgroupContainer.SetReference(null);
+                    _groupView.selectedIndex = -1;
+                }
 
                 _database.Records.RemoveAt(index);
                 _groupView.RefreshItems();
-
-                if (_groupView.selectedIndex == index)
-                    _groupView.selectedIndex = -1;
-
-                for (int i = index; i < _database.Records.Count; i++)
-                {
-                    _database.Records[i].Id = startId;
-                    startId++;
-                }
 
                 _database.Owner.ApplyModifiedProperties();
             });

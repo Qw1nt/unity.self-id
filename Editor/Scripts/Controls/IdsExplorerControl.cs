@@ -64,7 +64,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
         {
             element.UnSubscribe();
             
-            element.SetReference(_subgroup.Ids[index]);
+            element.SetReference(_group, _subgroup, _subgroup.Ids[index]);
             element.SubscribeOnDelete(() =>
             {
                 var id = _subgroup.Ids[index];
@@ -121,9 +121,14 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
 
             ids.CreateElement(id =>
             {
-                id.EditorFullName = $"{_group.Name}/{_subgroup.Name}/{_addElementView.Name}";
                 id.Name = _addElementView.Name;
-                id.Hash = Id.Build(_group.Id, _subgroup.Id, (ushort)id.IndexInSubgroup);
+                id.EditorFullName = SerializedId.GenerateEditorFullName(_group, _subgroup, id);
+
+                id.Group = _group.Id;
+                id.Subgroup = _subgroup.Id;
+                id.Item = Id.GenerateFromGuid();
+                
+                id.Hash = Id.Build(_group.Id, _subgroup.Id, id.Item);
 
                 id.IndexInSubgroup = lastId + 1;
                 

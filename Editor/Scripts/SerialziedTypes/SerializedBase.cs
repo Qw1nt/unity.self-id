@@ -15,9 +15,9 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             return this;
         }
 
-        public SerializedBase SetSource(SerializedProperty source)
+        public SerializedBase SetSelf(SerializedProperty self)
         {
-            Reference = source;
+            Reference = self;
             OnSetSource(Reference);
 
             return this;

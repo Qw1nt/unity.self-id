@@ -9,11 +9,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Common
     public class IdGroup
     {
         [SerializeField] private string _name;
-        [SerializeField] private ushort _id;
+        [SerializeField] private ulong _id;
 
         [SerializeField] private IdSubgroup[] _subgroups;
         
-        public IdGroup(string name, ushort id)
+        public IdGroup(string name, ulong id)
         {
             _name = name;
             _id = id;
@@ -21,7 +21,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Common
 
         public string Name => _name;
 
-        public ushort Id => _id;
+        public ulong Id => _id;
 
         internal IReadOnlyList<IdSubgroup> Subgroups => _subgroups;
     }
