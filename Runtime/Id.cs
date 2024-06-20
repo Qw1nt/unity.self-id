@@ -109,7 +109,7 @@ namespace Qw1nt.SelfIds.Runtime
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Id left, Id right)
         {
-            return left._id == right._id;
+            return left._hash == right._hash;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
