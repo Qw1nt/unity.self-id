@@ -27,10 +27,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts
             var item = property.FindPropertyRelative("_item");
 
             var hash = property.FindPropertyRelative("_hash");
-
+            
             EditorGUI.BeginProperty(position, label, property);
 
-            EditorGUI.PrefixLabel(position, new GUIContent("ID: "));
+            EditorGUI.PrefixLabel(position, new GUIContent($"{property.displayName}: "));
 
             position.x += 35f;
             position.xMax -= 32f;
