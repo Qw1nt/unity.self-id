@@ -9,7 +9,7 @@ namespace Qw1nt.SelfIds.Runtime
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Id
     {
-        private const ulong Offset = 7_777_777_777_777_777UL;
+        internal const ulong Offset = 7_777_777_777_777_777UL;
 
 #if UNITY_EDITOR
         [SerializeField] private string _id;
@@ -86,7 +86,16 @@ namespace Qw1nt.SelfIds.Runtime
             var secondPart = (ulong)HashCode.Combine(parts[2], parts[3]);
             
             return firstPart ^ secondPart * Offset;
-        }
+        }       
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ulong GenerateFromWords(string first, string second, string third, string fourth)
+        {
+            var firstPart = (ulong)HashCode.Combine(first, third);
+            var secondPart = (ulong)HashCode.Combine(second, fourth);
+            
+            return firstPart ^ secondPart * Offset;
+        }        
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ulong Build(ulong group, ulong subGroup, ulong item)
