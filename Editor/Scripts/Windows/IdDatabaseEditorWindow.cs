@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Qw1nt.SelfIds.Editor.Scripts.Common;
 using Qw1nt.SelfIds.Editor.Scripts.Controls;
 using Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes;
 using Qw1nt.SelfIds.Editor.Scripts.Utils;
-using Qw1nt.SelfIds.Runtime;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -140,9 +137,13 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Windows
                     return;
                 }
 
+                var lastGroupId = _database.Records.Count > 0 
+                    ? _database.Records[^1].Id
+                    : 0;
+                
                 _database.Records.CreateElement(item =>
                 {
-                    item.Id = Id.GenerateFromGuid();
+                    item.Id = lastGroupId + 1;
                     item.Name = _groupNameInputField.value;
                     item.Subgroups.Clear();
 

@@ -126,7 +126,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             {
                 subgroup.GroupId = _reference.Id;
                 subgroup.Name = _addElementView.Name;
-                subgroup.Id = Id.GenerateFromGuid();
+                subgroup.Id = lastId + 1;
                 
                 subgroup.Ids.Clear();
                 

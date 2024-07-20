@@ -39,22 +39,22 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             set => _indexInSubgroup.uintValue = value;
         }
 
-        public ulong Group
+        public uint Group
         {
-            get => _group.ulongValue;
-            set => _group.ulongValue = value;
+            get => _group.uintValue;
+            set => _group.uintValue = value;
         }
 
-        public ulong Subgroup
+        public uint Subgroup
         {
-            get => _subgroup.ulongValue;
-            set => _subgroup.ulongValue = value;
+            get => _subgroup.uintValue;
+            set => _subgroup.uintValue = value;
         }
 
-        public ulong Item
+        public uint Item
         {
-            get => _item.ulongValue;
-            set => _item.ulongValue = value;
+            get => _item.uintValue;
+            set => _item.uintValue = value;
         }
         
         public ulong Hash

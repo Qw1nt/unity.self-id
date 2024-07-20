@@ -2,14 +2,18 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Qw1nt.SelfIds.Runtime
 {
+    /*
+     * Группа          Подгруппа      Уникальное значение,
+     * |----16 бит----|----16 бит----|------------32 бита------------|
+     */
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Id
     {
-        internal const ulong Offset = 7_777_777_777_777_777UL;
+        private const int GroupBitsOffset = 48;
+        private const int SubgroupBitsOffset = 32;
 
 #if UNITY_EDITOR
         [SerializeField] private string _id;
@@ -22,25 +26,25 @@ namespace Qw1nt.SelfIds.Runtime
         public string EditorFullName => _editorFullName;
 #endif
 
-        [SerializeField] private ulong _group;
-        [SerializeField] private ulong _subgroup;
-        [SerializeField] private ulong _item;
+        [SerializeField] private ushort _group;
+        [SerializeField] private ushort _subgroup;
+        [SerializeField] private uint _item;
 
         [SerializeField] private ulong _hash;
 
-        public ulong Group
+        public ushort Group
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _group;
         }
 
-        public ulong Subgroup
+        public ushort Subgroup
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _subgroup;
         }
 
-        public ulong Item
+        public uint Item
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _item;
@@ -70,37 +74,34 @@ namespace Qw1nt.SelfIds.Runtime
             return obj is Id other && Equals(other);
         }
 
-        public static Id Null => new();
-
-        /// <summary>
-        /// WARN: Allocated array
-        /// </summary>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ulong GenerateFromGuid()
+        public static Id Null
         {
-            var guid = Guid.NewGuid();
-            var parts = guid.ToString().Split('-');
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => new();
+        }
 
-            var firstPart = (ulong)HashCode.Combine(parts[0], parts[1]);
-            var secondPart = (ulong)HashCode.Combine(parts[2], parts[3]);
-            
-            return firstPart ^ secondPart * Offset;
-        }       
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ulong Build(ushort group, ushort subGroup, uint item)
+        {
+            return ((ulong)group << GroupBitsOffset) | ((ulong)subGroup << SubgroupBitsOffset) | item;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ushort GetGroup(ulong id)
+        {
+            return (ushort)((id >> GroupBitsOffset) & 0xFFFF);
+        }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ulong GenerateFromWords(string first, string second, string third, string fourth)
+        public static ushort GetSubgroup(ulong id)
         {
-            var firstPart = (ulong)HashCode.Combine(first, third);
-            var secondPart = (ulong)HashCode.Combine(second, fourth);
-            
-            return firstPart ^ secondPart * Offset;
+            return (ushort)((id >> SubgroupBitsOffset) & 0xFFFF);
         }        
-
+        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ulong Build(ulong group, ulong subGroup, ulong item)
+        public static ushort GetUniqueNumber(ulong id)
         {
-            return unchecked(group ^ subGroup * item * Offset);
+            return (ushort)(id & 0xFFFFFFFF);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -108,7 +109,7 @@ namespace Qw1nt.SelfIds.Runtime
         {
             return unchecked((int)id._hash);
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator ulong(Id id)
         {

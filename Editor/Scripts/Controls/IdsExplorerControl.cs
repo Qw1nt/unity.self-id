@@ -39,9 +39,9 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             _itemsContainer.fixedItemHeight = 90f;
 
             InstallBindings();
-            
+
             hierarchy.Add(_root);
-            
+
             _root.Disable();
         }
 
@@ -59,25 +59,25 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
             _itemsContainer.Disable();
             _addElementView.Enable();
         }
-        
+
         private void BindItem(IdCardControl element, int index)
         {
             element.UnSubscribe();
-            
+
             element.SetReference(_group, _subgroup, _subgroup.Ids[index]);
             element.SubscribeOnDelete(() =>
             {
                 var id = _subgroup.Ids[index];
-                
+
                 if (EditorUtility.DisplayDialog("Удаление ID", $"Удалить ID с названием {id.Name}?", "Да",
                         "Нет") == false)
                     return;
-                
-                var startIndex = (ushort) id.IndexInSubgroup;
+
+                var startIndex = (ushort)id.IndexInSubgroup;
 
                 _subgroup.Ids.RemoveAt(index);
                 _itemsContainer.RefreshItems();
-                    
+
                 for (int i = index; i < _subgroup.Ids.Count; i++)
                 {
                     _subgroup.Ids[i].IndexInSubgroup = startIndex;
@@ -85,7 +85,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
                 }
 
                 _itemsContainer.RefreshItems();
-                
+
                 _subgroup.ApplyModifiers();
             });
         }
@@ -103,7 +103,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
                 EditorUtility.DisplayDialog("Ошибка", "Название ID не может начинаться с цифры", "Ок");
                 return;
             }
-            
+
             var ids = _subgroup.Ids;
 
             foreach (var id in ids)
@@ -115,7 +115,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
                 return;
             }
 
-            var lastId = ids.Count > 0
+            var lastSubgroupIndex = ids.Count > 0
                 ? ids[^1].IndexInSubgroup
                 : 0;
 
@@ -126,15 +126,15 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
 
                 id.Group = _group.Id;
                 id.Subgroup = _subgroup.Id;
-                id.Item = Id.GenerateFromGuid();
-                
-                id.Hash = Id.Build(_group.Id, _subgroup.Id, id.Item);
+                id.Item = lastSubgroupIndex;
 
-                id.IndexInSubgroup = lastId + 1;
-                
+                id.Hash = Id.Build((ushort)_group.Id, (ushort)_subgroup.Id, id.Item);
+
+                id.IndexInSubgroup = lastSubgroupIndex + 1;
+
                 id.ApplyModifiers();
             });
-            
+
             _itemsContainer.RefreshItems();
             _addElementView.Name = string.Empty;
         }
@@ -150,7 +150,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
         {
             _group = group;
             _subgroup = subgroup;
-            
+
             if (_subgroup == null)
             {
                 _itemsContainer.itemsSource = null;

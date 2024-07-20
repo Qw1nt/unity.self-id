@@ -25,10 +25,10 @@ namespace Qw1nt.SelfIds.Editor.Scripts.SerialziedTypes
             }
         }
 
-        public ulong Id
+        public uint Id
         {
-            get => _id.ulongValue;
-            set => _id.ulongValue = value;
+            get => _id.uintValue;
+            set => _id.uintValue = value;
         }
         
         public SerializedArray<SerializedSubgroup> Subgroups { get; private set; }
