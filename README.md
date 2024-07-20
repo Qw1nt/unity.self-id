@@ -5,7 +5,7 @@
 
 ## Установка
 
-- Через Package Manager `https://github.com/Qw1nt/unity.self-id.git`
+- С помощью [.unitypackage](https://github.com/Qw1nt/unity.self-id/releases/download/0.1.0/unity.self-id.unitypackage)
 
 ## Основное
 
