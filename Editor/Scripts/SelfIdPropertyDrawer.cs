@@ -14,7 +14,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_id"));
+            return EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_id")) + 15f;
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -56,6 +56,11 @@ namespace Qw1nt.SelfIds.Editor.Scripts
                 SearchWindow.Open(new SearchWindowContext(GUIUtility.GUIToScreenPoint(Event.current.mousePosition)),
                     window);
             }
+
+            var labelPosition = position;
+            labelPosition.y += 10f;
+            
+            GUI.Label(labelPosition, hash.ulongValue.ToString());
 
             EditorGUI.EndProperty();
         }

@@ -126,7 +126,7 @@ namespace Qw1nt.SelfIds.Editor.Scripts.Controls
 
                 id.Group = _group.Id;
                 id.Subgroup = _subgroup.Id;
-                id.Item = lastSubgroupIndex;
+                id.Item = lastSubgroupIndex + 1;
 
                 id.Hash = Id.Build((ushort)_group.Id, (ushort)_subgroup.Id, id.Item);
 
