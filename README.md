@@ -5,7 +5,9 @@
 
 ## Установка
 
-- С помощью .unitypackage
+```
+https://github.com/Qw1nt/unity.self-id.git?path=/Assets/unity.self-id
+```
 
 ## Основное
 
