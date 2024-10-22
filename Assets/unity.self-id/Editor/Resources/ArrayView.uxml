@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/unity.self-id/Editor/Resources/Uss/Common.uss?fileID=7433441132597879392&amp;guid=3d3b03942654c164d971a0ae9a49b509&amp;type=3#Common" />
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; margin-left: 8px;">
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="add-new-element-button" style="justify-content: center; align-items: center; visibility: visible; display: flex; margin-bottom: 8px;">
+            <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/unity.self-id/Editor/Art/Icons/plus-custom.png?fileID=2800000&amp;guid=bc27b4a343f5f3445975882b44b41cb0&amp;type=3#plus-custom&quot;); width: 24px; height: 24px; justify-content: center; align-items: center; margin-top: -5px; margin-right: -5px; margin-bottom: -5px; margin-left: -5px;" />
+        </ui:Button>
+        <ui:VisualElement name="add-new-element-view" style="flex-grow: 1;">
+            <ui:TextField picking-mode="Ignore" label="Название" name="element-name-field" />
+            <ui:Button text="Создать" parse-escape-sequences="true" display-tooltip-when-elided="true" name="create-element-button" style="margin-top: 7.5px;" />
+            <ui:Button text="Отмена" parse-escape-sequences="true" display-tooltip-when-elided="true" name="cancel-create-button" style="margin-top: 3px;" />
+        </ui:VisualElement>
+        <ui:ListView name="elements-container" />
+    </ui:VisualElement>
+</ui:UXML>

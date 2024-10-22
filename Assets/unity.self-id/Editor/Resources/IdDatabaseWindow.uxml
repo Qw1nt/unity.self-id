@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/3rdParty/Qw1nt/unity.self-id/Editor/Resources/Uss/Common.uss?fileID=7433441132597879392&amp;guid=3d3b03942654c164d971a0ae9a49b509&amp;type=3#Common" />
+    <ui:VisualElement name="root" style="flex-grow: 1;">
+        <ui:VisualElement name="header" style="flex-grow: 0; flex-direction: column; border-bottom-color: rgb(87, 87, 87); border-bottom-width: 1px; padding-bottom: 2px; margin-bottom: 4px;">
+            <ui:Label tabindex="-1" text="Id Database" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; font-size: 18px; -unity-font: resource(&apos;Fonts/Inter-Bold&apos;); -unity-font-style: normal; text-shadow: 0 0 0 rgba(0, 0, 0, 0); margin-right: 0; margin-left: 0; margin-top: 4px; flex-grow: 0.1; padding-right: 16px;" />
+            <ui:VisualElement style="flex-grow: 1; -unity-text-align: middle-left; flex-direction: row; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 8px;">
+                <ui:VisualElement style="flex-grow: 1; flex-direction: row; padding-bottom: 8px;">
+                    <ui:Button text="Поиск" parse-escape-sequences="true" display-tooltip-when-elided="true" name="find-group-buttonb" style="margin-top: 0; margin-right: 5px; margin-bottom: 0; margin-left: 5px; -unity-font: resource(&apos;Fonts/Inter-ExtraBold&apos;); font-size: 15px; display: flex; visibility: hidden;" />
+                    <ui:TextField picking-mode="Ignore" is-delayed="false" hide-mobile-input="true" name="group-name-input" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-grow: 1;" />
+                    <ui:Button text="Создать" parse-escape-sequences="true" display-tooltip-when-elided="true" name="create-group-button" style="margin-top: 0; margin-right: 5px; margin-bottom: 0; margin-left: 5px; -unity-font: resource(&apos;Fonts/Inter-ExtraBold&apos;); font-size: 12px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; padding-top: 0; padding-right: 4px; padding-bottom: 0; padding-left: 4px; -unity-font-style: bold; width: 80px;" />
+                    <ui:Button text="Генерация" parse-escape-sequences="true" display-tooltip-when-elided="true" name="open-generation-view" style="margin-top: 0; margin-right: 5px; margin-bottom: 0; margin-left: 5px; -unity-font: resource(&apos;Fonts/Inter-ExtraBold&apos;); font-size: 12px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; padding-top: 0; padding-right: 4px; padding-bottom: 0; padding-left: 4px; -unity-font-style: bold; width: 98px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="content" style="flex-grow: 1; flex-shrink: 1; flex-direction: row;" />
+    </ui:VisualElement>
+</ui:UXML>

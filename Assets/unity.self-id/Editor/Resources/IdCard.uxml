@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/3rdParty/Qw1nt/unity.self-id/Editor/Resources/Uss/Common.uss?fileID=7433441132597879392&amp;guid=3d3b03942654c164d971a0ae9a49b509&amp;type=3#Common" />
+    <Style src="project://database/Assets/3rdParty/Qw1nt/unity.self-id/Editor/Resources/Uss/IdCard.uss?fileID=7433441132597879392&amp;guid=96c96046bb2634b429e03a3f94fce5a2&amp;type=3#IdCard" />
+    <ui:VisualElement style="flex-grow: 1; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; align-items: stretch; justify-content: center;">
+        <ui:TextField picking-mode="Ignore" value="filler text" name="name" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="numeric-id" style="margin-top: 4px;" />
+        <ui:Button text="Удалить" parse-escape-sequences="true" display-tooltip-when-elided="true" name="delete-button" style="align-items: flex-end; justify-content: center; align-self: flex-end;" />
+    </ui:VisualElement>
+</ui:UXML>

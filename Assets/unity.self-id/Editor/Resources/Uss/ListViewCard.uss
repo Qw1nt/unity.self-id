@@ -1,0 +1,7 @@
+#unity-text-input {
+    border-radius: 0;
+    border-width: 0 0 1 0;
+    border-color: rgb(25, 25, 25);
+    font-size: 15px;
+    padding: 4px;
+}

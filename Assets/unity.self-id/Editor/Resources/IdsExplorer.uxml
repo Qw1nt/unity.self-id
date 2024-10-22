@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/3rdParty/Qw1nt/unity.self-id/Editor/Resources/Uss/Common.uss?fileID=7433441132597879392&amp;guid=3d3b03942654c164d971a0ae9a49b509&amp;type=3#Common" />
+    <ui:VisualElement name="root" style="flex-grow: 1;">
+        <ui:ListView />
+    </ui:VisualElement>
+</ui:UXML>

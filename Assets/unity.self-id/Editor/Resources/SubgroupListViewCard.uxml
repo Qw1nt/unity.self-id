@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/unity.self-id/Editor/Resources/Uss/ListViewCard.uss?fileID=7433441132597879392&amp;guid=b93974e9db467ca4da5ff2e8b89fc3c2&amp;type=3#ListViewCard" />
+    <Style src="project://database/Assets/unity.self-id/Editor/Resources/Uss/Common.uss?fileID=7433441132597879392&amp;guid=3d3b03942654c164d971a0ae9a49b509&amp;type=3#Common" />
+    <ui:VisualElement style="flex-grow: 1; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; flex-direction: row; justify-content: center; align-self: auto; align-items: center; margin-right: 0;">
+        <ui:VisualElement style="flex-grow: 1; justify-content: center; margin-right: 0;">
+            <ui:TextField picking-mode="Ignore" value="filler text" name="subgroup-name" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+            <ui:VisualElement style="flex-grow: 0; flex-direction: row; margin-top: 2px; flex-shrink: 1; background-color: rgb(50, 50, 50); padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                <ui:Label tabindex="-1" text="Кол-во ID:" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ids-count-label" style="-unity-font: resource(&apos;Fonts/Inter-Bold&apos;); -unity-font-style: normal;" />
+            </ui:VisualElement>
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" text="Удалить" name="delete-button" style="align-items: center; justify-content: center; align-self: flex-end; margin-top: 8px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
